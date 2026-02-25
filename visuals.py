@@ -51,9 +51,9 @@ df_metrics = pd.DataFrame(data)
 numeric_cols = [col for col in df_metrics.columns if col != 'State']
 df_metrics[numeric_cols] = df_metrics[numeric_cols].apply(pd.to_numeric, errors='coerce')
 
-# 3. Identify Top 3 States (California, Texas, Florida) by Urbanization Gap/Size
-top_3_states = df_metrics.sort_values('Urbanization_Gap', ascending=False).head(5)
-states_labels = top_3_states['State'].tolist()
+# 3. Identify Top 5 States by Urbanization Gap/Size
+top_5_states = df_metrics.sort_values('Urbanization_Gap', ascending=False).head(5)
+states_labels = top_5_states['State'].tolist()
 
 
 # Set up the positions for the bars
@@ -63,13 +63,13 @@ width = 0.25
 fig, ax = plt.subplots(figsize=(10, 6))
 
 # Plot each income bracket
-ax.bar(x - width, top_3_states['Income_Under20k_BB'] / 1_000_000, width, label='Under $20k', color='#5da5da')
-ax.bar(x, top_3_states['Income_20k-75k_BB'] / 1_000_000, width, label='$20k - $74.9k', color='#faa43a')
-ax.bar(x + width, top_3_states['Income_75k+_BB'] / 1_000_000, width, label='$75k or more', color='#60bd68')
+ax.bar(x - width, top_5_states['Income_Under20k_BB'] / 1_000_000, width, label='Under $20k', color='#5da5da')
+ax.bar(x, top_5_states['Income_20k-75k_BB'] / 1_000_000, width, label='$20k - $74.9k', color='#faa43a')
+ax.bar(x + width, top_5_states['Income_75k+_BB'] / 1_000_000, width, label='$75k or more', color='#60bd68')
 
 # Formatting the chart
 ax.set_ylabel('Households with Broadband Estimate (in millions)')
-ax.set_title('Broadband Usage Across Income Brackets (Top 3 States)')
+ax.set_title('Broadband Usage Across Income Brackets (Top 5 States)')
 ax.set_xticks(x)
 ax.set_xticklabels(states_labels)
 ax.ticklabel_format(style='plain', axis='y') # Disable scientific notation on y-axis
@@ -84,12 +84,12 @@ width = 0.35
 fig, ax = plt.subplots(figsize=(10, 6))
 
 # Plot Smartphone vs Desktop/Laptop
-ax.bar(x - width/2, top_3_states['Smartphone'] / 1_000_000, width, label='Smartphone', color='#4d4d4d')
-ax.bar(x + width/2, top_3_states['Desktop_Laptop'] / 1_000_000, width, label='Desktop/Laptop', color='#5da5da')
+ax.bar(x - width/2, top_5_states['Smartphone'] / 1_000_000, width, label='Smartphone', color='#4d4d4d')
+ax.bar(x + width/2, top_5_states['Desktop_Laptop'] / 1_000_000, width, label='Desktop/Laptop', color='#5da5da')
 
 # Formatting the chart
 ax.set_ylabel('Number of Households Owning Device (in millions)')
-ax.set_title('Device Ownership Comparison (Top 3 States)')
+ax.set_title('Device Ownership Comparison (Top 5 States)')
 ax.set_xticks(x)
 ax.set_xticklabels(states_labels)
 ax.ticklabel_format(style='plain', axis='y') # Disable scientific notation on y-axis
@@ -101,21 +101,20 @@ plt.show()
 
 
 # Identify the top 5 states based on the gap between Broadband and Satellite
-top_5_gap = df_metrics.sort_values('Urbanization_Gap', ascending=False).head(5)
-x_5 = np.arange(len(top_5_gap))
+# We can just reuse top_5_states here!
 width = 0.35
 
 fig, ax = plt.subplots(figsize=(12, 6))
 
 # Plot Broadband vs Satellite
-ax.bar(x_5 - width/2, top_5_gap['Broadband'] / 1_000_000, width, label='Broadband', color='steelblue')
-ax.bar(x_5 + width/2, top_5_gap['Satellite'] / 1_000_000, width, label='Satellite', color='darkorange')
+ax.bar(x - width/2, top_5_states['Broadband'] / 1_000_000, width, label='Broadband', color='steelblue')
+ax.bar(x + width/2, top_5_states['Satellite'] / 1_000_000, width, label='Satellite', color='darkorange')
 
 # Formatting the chart
 ax.set_ylabel('Number of Households (in millions)')
 ax.set_title('Top 5 States with the Largest Gap between Broadband and Satellite')
-ax.set_xticks(x_5)
-ax.set_xticklabels(top_5_gap['State'], rotation=45, ha='right')
+ax.set_xticks(x)
+ax.set_xticklabels(states_labels, rotation=45, ha='right')
 ax.ticklabel_format(style='plain', axis='y') # Disable scientific notation on y-axis
 ax.legend()
 
