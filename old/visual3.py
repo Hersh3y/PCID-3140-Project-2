@@ -1,5 +1,3 @@
-# visual2.py
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -25,13 +23,16 @@ for state in states:
         return float(val)
 
     # Extract specific percentages directly from the dataset rows
-    desktop_laptop_pct = get_pct(5)
-    smartphone_pct = get_pct(7)
+    # Row 20 corresponds to 'Broadband such as cable, fiber optic or DSL'
+    # Row 21 corresponds to 'Satellite Internet service'
+    optic_dsl_pct = get_pct(20)
+    satellite_pct = get_pct(21)
     
     data.append({
         'State': state,
-        'Desktop_Laptop_Pct': desktop_laptop_pct,
-        'Smartphone_Pct': smartphone_pct
+        'Optic_DSL_Pct': optic_dsl_pct,
+        'Satellite_Pct': satellite_pct,
+        'Gap_Pct': optic_dsl_pct - satellite_pct # Difference in percentage points
     })
 
 # Convert to DataFrame
@@ -41,30 +42,29 @@ df_metrics = pd.DataFrame(data)
 numeric_cols = [col for col in df_metrics.columns if col != 'State']
 df_metrics[numeric_cols] = df_metrics[numeric_cols].apply(pd.to_numeric, errors='coerce')
 
-# Identify Top 5 States based on highest percentage of Desktop/Laptop ownership
-top_5_states = df_metrics.sort_values('Desktop_Laptop_Pct', ascending=False).head(5)
+# Identify Top 5 States based on highest percentage gap between Optic/DSL and Satellite
+top_5_states = df_metrics.sort_values('Gap_Pct', ascending=False).head(5)
 states_labels = top_5_states['State'].tolist()
 
 
-# --- VISUAL 2: Device Ownership Comparison ---
+# --- VISUAL 3 ---
+# Set up the positions for the bars
 x = np.arange(len(states_labels))
 width = 0.35
 
 fig, ax = plt.subplots(figsize=(10, 6))
 
-# Plot Smartphone vs Desktop/Laptop
-ax.bar(x - width/2, top_5_states['Smartphone_Pct'], width, label='Smartphone', color='#4d4d4d')
-ax.bar(x + width/2, top_5_states['Desktop_Laptop_Pct'], width, label='Desktop/Laptop', color='#5da5da')
+# Plot Optic/DSL vs Satellite
+ax.bar(x - width/2, top_5_states['Optic_DSL_Pct'], width, label='Broadband (Optic/DSL)', color='steelblue')
+ax.bar(x + width/2, top_5_states['Satellite_Pct'], width, label='Satellite', color='darkorange')
 
 # Formatting the chart
 ax.set_ylabel('Percentage of Total State Households (%)')
-ax.set_title('Device Ownership Comparison (Top 5 States by Desktop/Laptop Ownership)')
+ax.set_title('Top 5 States with Largest Gap between Optic/DSL and Satellite')
 ax.set_xticks(x)
-ax.set_xticklabels(states_labels)
-
-# Move legend or adjust to avoid overlapping bars 
-ax.legend(loc='lower right') 
+ax.set_xticklabels(states_labels, rotation=45, ha='right')
+ax.legend()
 
 plt.tight_layout()
-plt.savefig('visual2_device_ownership.png')
+plt.savefig('visual3_urbanization_gap_clustered.png')
 plt.show()
