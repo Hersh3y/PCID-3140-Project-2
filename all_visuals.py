@@ -109,6 +109,10 @@ ax2.set_ylabel('Percentage of Total State Households (%)')
 ax2.set_title('Device Ownership Comparison (Top 5 States by Desktop/Laptop Ownership)')
 ax2.set_xticks(x2)
 ax2.set_xticklabels(states_labels_2)
+
+# Zoom in on the top 25% of the chart
+ax2.set_ylim(75, 100)
+
 ax2.legend(loc='lower right') 
 plt.tight_layout()
 plt.savefig('visual2_device_ownership.png')

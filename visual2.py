@@ -62,6 +62,9 @@ ax.set_title('Device Ownership Comparison (Top 5 States by Desktop/Laptop Owners
 ax.set_xticks(x)
 ax.set_xticklabels(states_labels)
 
+# Zoom in on the top 25% of the chart
+ax.set_ylim(75, 100)
+
 # Move legend or adjust to avoid overlapping bars 
 ax.legend(loc='lower right') 
 
