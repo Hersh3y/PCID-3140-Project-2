@@ -2,26 +2,29 @@
 
 ## Project Overview
 
-This project analyzes household internet subscriptions and device ownership patterns across U.S. states using data from the Census Bureau. The analysis focuses on understanding digital divides by examining broadband penetration, device ownership, income levels, and urbanization gaps.
+This project analyzes household internet subscriptions and device ownership patterns across U.S. states using data from the Census Bureau. The analysis focuses on understanding digital divides by examining broadband penetration across income levels, device ownership rates, and the gap between fiber-optic/DSL and satellite internet access.
 
-## Features
+## Visualizations
 
-The script generates three main visualizations:
+The main script (`all_visuals.py`) generates three visualizations:
 
-1. **Broadband Usage Across Income Brackets** (`visual1_income_broadband.png`)
-   - Compares broadband household subscriptions across three income brackets
-   - Data for the top 5 states by urbanization gap
-   - Shows how internet access varies by income level
+### 1. Broadband Usage Across Income Brackets (`visual1_income_broadband.png`)
 
-2. **Device Ownership Comparison** (`visual2_device_ownership.png`)
-   - Compares smartphone vs. desktop/laptop ownership
-   - Highlights differences in device preferences across top states
-   - Measured in millions of households
+- Compares broadband household subscriptions across three income brackets: under $20k, $20k–$74.9k, and $75k+
+- Selects the top 5 states by broadband percentage for the $75k+ bracket
+- Displays household counts in millions
 
-3. **Urbanization Gap Analysis** (`visual3_urbanization_gap_clustered.png`)
-   - Displays the gap between broadband and satellite internet subscriptions
-   - Identifies states with the largest digital divide
-   - Shows top 5 states ranked by urbanization gap
+### 2. Device Ownership Comparison (`visual2_device_ownership.png`)
+
+- Compares smartphone vs. desktop/laptop ownership as a percentage of total state households
+- Selects the top 5 states by desktop/laptop ownership percentage
+- Y-axis zoomed to 75–100% to highlight differences
+
+### 3. Optic/DSL vs Satellite Gap (`visual3_optic_satellite_gap.png`)
+
+- Compares fiber-optic/DSL and satellite internet subscriptions
+- Filters to states that appeared in Visual 1 or Visual 2, then ranks by the largest gap
+- Displays the top 5 states in millions of households
 
 ## Requirements
 
@@ -29,50 +32,45 @@ The script generates three main visualizations:
 - pandas
 - numpy
 - matplotlib
-- openpyxl (for reading Excel files)
+- openpyxl
 
-## Installation
+## Setup
 
-1. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   ```
+```bash
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
 
-2. Activate the virtual environment:
-   - On Windows: `venv\Scripts\activate`
-   - On macOS/Linux: `source venv/bin/activate`
-
-3. Install dependencies:
-   ```bash
-   pip install pandas numpy matplotlib openpyxl
-   ```
+pip install pandas numpy matplotlib openpyxl
+```
 
 ## Usage
 
-1. Place the Excel file `P2_Types of computers and internet subscriptions.xlsx` in the project directory
+Place `P2_Types of computers and internet subscriptions.xlsx` in the project root, then run:
 
-2. Run the analysis:
-   ```bash
-   python visuals.py
-   ```
+```bash
+python all_visuals.py
+```
 
-3. The script will generate three PNG files with the visualizations and display them
+The script will display each chart and save them as PNG files.
 
 ## Data Source
 
-The data comes from the Census Bureau dataset on types of computers and internet subscriptions by state.
-
-## Output Files
-
-- `visual1_income_broadband.png` - Income bracket broadband analysis
-- `visual2_device_ownership.png` - Device ownership comparison
-- `visual3_urbanization_gap_clustered.png` - Urbanization gap analysis
+Census Bureau — Types of Computers and Internet Subscriptions by State.
 
 ## Project Structure
 
 ```
 PCID-3140-Project-2/
 ├── README.md
-├── visuals.py
+├── all_visuals.py          # Main script (all three visuals)
+├── visual1.py              # Standalone Visual 1
+├── visual2.py              # Standalone Visual 2
+├── old/                    # Previous script versions
+│   ├── visual3.py
+│   ├── visuals_v2.py
+│   └── visuals.py
 └── P2_Types of computers and internet subscriptions.xlsx
 ```
