@@ -80,7 +80,7 @@ ax1.bar(x1, top_5_states_graph1['Income_20k-75k_BB'] / 1_000_000, width1, label=
 ax1.bar(x1 + width1, top_5_states_graph1['Income_75k+_BB'] / 1_000_000, width1, label='$75k or more', color='#60bd68')
 
 ax1.set_ylabel('Households with Broadband Estimate (in millions)')
-ax1.set_title('Broadband Usage Across Income Brackets\n(Top 5 States by Broadband % for $75k+)')
+ax1.set_title('Broadband Usage Across Income Brackets\n(Top 5 States ordered by Broadband % for $75k+)')
 ax1.set_xticks(x1)
 ax1.set_xticklabels(states_labels_1)
 ax1.ticklabel_format(style='plain', axis='y')
@@ -106,7 +106,7 @@ ax2.bar(x2 - width2/2, top_5_states_graph2['Smartphone_Pct'], width2, label='Sma
 ax2.bar(x2 + width2/2, top_5_states_graph2['Desktop_Laptop_Pct'], width2, label='Desktop/Laptop', color='#5da5da')
 
 ax2.set_ylabel('Percentage of Total State Households (%)')
-ax2.set_title('Device Ownership Comparison (Top 5 States by Desktop/Laptop Ownership)')
+ax2.set_title('Device Ownership (Top 5 States ordered by Desktop/Laptop %)')
 ax2.set_xticks(x2)
 ax2.set_xticklabels(states_labels_2)
 
@@ -146,7 +146,7 @@ ax3.bar(x3 + width3/2, top_5_states_graph3['Satellite'] / 1_000_000, width3, lab
 
 # Formatting the chart
 ax3.set_ylabel('Households (in millions)')
-ax3.set_title('Optic/DSL vs Satellite Internet Users\n(Top 5 Highest Gap States from previous lists)')
+ax3.set_title('Optic/DSL vs Satellite Internet Users\n(Top 5 states from previous charts, ordered by highest gap)')
 ax3.set_xticks(x3)
 ax3.set_xticklabels(states_labels_3)
 ax3.ticklabel_format(style='plain', axis='y')
