@@ -52,7 +52,7 @@ numeric_cols = [col for col in df_metrics.columns if col != 'State']
 df_metrics[numeric_cols] = df_metrics[numeric_cols].apply(pd.to_numeric, errors='coerce')
 
 # 3. Identify Top 5 States by Urbanization Gap/Size
-top_5_states = df_metrics.sort_values('Urbanization_Gap', ascending=False).head(5)
+top_5_states = df_metrics.sort_values('Urbanization_Gap', ascending=False).head(10)
 states_labels = top_5_states['State'].tolist()
 
 
