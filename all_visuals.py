@@ -113,7 +113,7 @@ ax2.set_xticklabels(states_labels_2)
 # Zoom in on the top 25% of the chart
 ax2.set_ylim(75, 100)
 
-ax2.legend(loc='lower right') 
+ax2.legend(loc='upper right') 
 plt.tight_layout()
 plt.savefig('visual2_device_ownership.png')
 plt.show()
